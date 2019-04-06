@@ -1,5 +1,5 @@
 # Horovod  
-2019-04-05  
+2019-04-06  
 ### 目录  
 * imgs -->笔记图片
 * notes-->笔记   
@@ -92,9 +92,15 @@ with tf.train.MonitoredTrainingSession(checkpoint_dir=checkpoint_dir,
     mon_sess.run(train_op)
 ```
 ### 5.运行Horovod  
-* （1）[Tensorflow](notes/tensorflow.md)
-* （2）[MxNet](notes/mxnet.md)
-* （3）[Pytorch](notes/pytorch.md)
-* （4）[Keras](notes/keras.md)
-
+* （1）主机上
+* （2）Docker  
+  * [Tensorflow](notes/tensorflow.md)
+  * [MxNet](notes/mxnet.md)
+  * [Pytorch](notes/pytorch.md)
+  * [Keras](notes/keras.md)
+* （3） Kubeflow  
+* （4） MPI Operator
+* （5） Helm Chart
+* （6） FfDL
+* （7） Spark  
  
