@@ -1,0 +1,88 @@
+root@9fefde7a478e:/examples# horovodrun -np 2 -H localhost:2 python mxnet_mnist.py 
+[1,0]<stderr>:INFO:root:Namespace(batch_size=64, dtype='float32', epochs=5, lr=0.01, momentum=0.9, no_cuda=False)
+[1,1]<stderr>:INFO:root:Namespace(batch_size=64, dtype='float32', epochs=5, lr=0.01, momentum=0.9, no_cuda=False)
+[1,0]<stderr>:INFO:root:data-0/mnist.zip exists, skipping download
+[1,1]<stderr>:INFO:root:data-1/mnist.zip exists, skipping download
+[1,0]<stderr>:[03:48:20] src/io/iter_mnist.cc:113: MNISTIter: load 30000 images, shuffle=1, shape=[64,1,28,28]
+[1,1]<stderr>:[03:48:20] src/io/iter_mnist.cc:113: MNISTIter: load 30000 images, shuffle=1, shape=[64,1,28,28]
+[1,0]<stderr>:[03:48:20] src/io/iter_mnist.cc:113: MNISTIter: load 10000 images, shuffle=1, shape=[64,1,28,28]
+[1,1]<stderr>:[03:48:20] src/io/iter_mnist.cc:113: MNISTIter: load 10000 images, shuffle=1, shape=[64,1,28,28]
+[1,1]<stderr>:[03:48:26] src/operator/nn/./cudnn/./cudnn_algoreg-inl.h:97: Running performance tests to find the best convolution algorithm, this can take a while... (setting env variable MXNET_CUDNN_AUTOTUNE_DEFAULT to 0 to disable)
+[1,0]<stderr>:[03:48:26] src/operator/nn/./cudnn/./cudnn_algoreg-inl.h:97: Running performance tests to find the best convolution algorithm, this can take a while... (setting env variable MXNET_CUDNN_AUTOTUNE_DEFAULT to 0 to disable)
+[1,0]<stdout>:
+[1,0]<stdout>:9fefde7a478e:15122:15479 [0] misc/ibvwrap.cu:63 NCCL WARN Failed to open libibverbs.so[.1]
+[1,0]<stdout>:9fefde7a478e:15122:15479 [0] NCCL INFO Using internal Network Socket
+[1,0]<stdout>:9fefde7a478e:15122:15479 [0] NCCL INFO NET : Using interface eth0:172.17.0.2<0>
+[1,0]<stdout>:9fefde7a478e:15122:15479 [0] NCCL INFO NET/Socket : 1 interfaces found
+[1,0]<stdout>:NCCL version 2.3.7+cuda9.0
+[1,0]<stdout>:9fefde7a478e:15122:15479 [0] NCCL INFO rank 0 nranks 2
+[1,1]<stdout>:
+[1,1]<stdout>:9fefde7a478e:15123:15491 [1] misc/ibvwrap.cu:63 NCCL WARN Failed to open libibverbs.so[.1]
+[1,1]<stdout>:9fefde7a478e:15123:15491 [1] NCCL INFO Using internal Network Socket
+[1,1]<stdout>:9fefde7a478e:15123:15491 [1] NCCL INFO rank 1 nranks 2
+[1,0]<stdout>:9fefde7a478e:15122:15479 [0] NCCL INFO comm 0x7fac9421a130 rank 0 nranks 2
+[1,1]<stdout>:9fefde7a478e:15123:15491 [1] NCCL INFO comm 0x7f568c2199d0 rank 1 nranks 2
+[1,1]<stdout>:9fefde7a478e:15123:15491 [1] NCCL INFO NET : Using interface eth0:172.17.0.2<0>
+[1,1]<stdout>:9fefde7a478e:15123:15491 [1] NCCL INFO NET/Socket : 1 interfaces found
+[1,0]<stdout>:9fefde7a478e:15122:15479 [0] NCCL INFO Could not find real path of /sys/class/net/eth0/device
+[1,0]<stdout>:9fefde7a478e:15122:15479 [0] NCCL INFO CUDA Dev 0, IP Interfaces : eth0(SOC) 
+[1,1]<stdout>:9fefde7a478e:15123:15491 [1] NCCL INFO Could not find real path of /sys/class/net/eth0/device
+[1,1]<stdout>:9fefde7a478e:15123:15491 [1] NCCL INFO CUDA Dev 1, IP Interfaces : eth0(SOC) 
+[1,0]<stdout>:9fefde7a478e:15122:15479 [0] NCCL INFO Using 256 threads
+[1,0]<stdout>:9fefde7a478e:15122:15479 [0] NCCL INFO Min Comp Cap 6
+[1,0]<stdout>:9fefde7a478e:15122:15479 [0] NCCL INFO Ring 00 :    0   1
+[1,1]<stdout>:9fefde7a478e:15123:15491 [1] NCCL INFO Ring 00 : 1[1] -> 0[0] via direct shared memory
+[1,0]<stdout>:9fefde7a478e:15122:15479 [0] NCCL INFO Ring 00 : 0[0] -> 1[1] via direct shared memory
+[1,0]<stdout>:9fefde7a478e:15122:15479 [0] NCCL INFO comm 0x7fac9421a130 rank 0 nranks 2 - COMPLETE
+[1,1]<stdout>:9fefde7a478e:15123:15491 [1] NCCL INFO comm 0x7f568c2199d0 rank 1 nranks 2 - COMPLETE
+[1,0]<stdout>:9fefde7a478e:15122:15479 [0] NCCL INFO Launch mode Parallel
+[1,1]<stderr>:INFO:root:[Epoch 0 Batch 100] Training: accuracy=0.867500
+[1,0]<stderr>:INFO:root:[Epoch 0 Batch 100] Training: accuracy=0.865469
+[1,0]<stderr>:INFO:root:[Epoch 0 Batch 200] Training: accuracy=0.915781
+[1,1]<stderr>:INFO:root:[Epoch 0 Batch 200] Training: accuracy=0.914062
+[1,1]<stderr>:INFO:root:[Epoch 0 Batch 300] Training: accuracy=0.933854
+[1,0]<stderr>:INFO:root:[Epoch 0 Batch 300] Training: accuracy=0.934375
+[1,1]<stderr>:INFO:root:[Epoch 0 Batch 400] Training: accuracy=0.944648
+[1,0]<stderr>:INFO:root:[Epoch 0 Batch 400] Training: accuracy=0.944844
+[1,0]<stderr>:INFO:root:Epoch[0]	Speed=23191.64 samples/s	Time cost=2.583000
+[1,0]<stderr>:INFO:root:Epoch[0]	Train: accuracy=0.949653	Validation: accuracy=0.981871
+[1,1]<stderr>:INFO:root:[Epoch 1 Batch 100] Training: accuracy=0.980938
+[1,0]<stderr>:INFO:root:[Epoch 1 Batch 100] Training: accuracy=0.984844
+[1,1]<stderr>:INFO:root:[Epoch 1 Batch 200] Training: accuracy=0.981484
+[1,0]<stderr>:INFO:root:[Epoch 1 Batch 200] Training: accuracy=0.985469
+[1,1]<stderr>:INFO:root:[Epoch 1 Batch 300] Training: accuracy=0.981927
+[1,0]<stderr>:INFO:root:[Epoch 1 Batch 300] Training: accuracy=0.985365
+[1,1]<stderr>:INFO:root:[Epoch 1 Batch 400] Training: accuracy=0.982891
+[1,0]<stderr>:INFO:root:[Epoch 1 Batch 400] Training: accuracy=0.985117
+[1,0]<stderr>:INFO:root:Epoch[1]	Speed=12641.80 samples/s	Time cost=4.738564
+[1,0]<stderr>:INFO:root:Epoch[1]	Train: accuracy=0.985276	Validation: accuracy=0.986579
+[1,0]<stderr>:INFO:root:[Epoch 2 Batch 100] Training: accuracy=0.990313
+[1,1]<stderr>:INFO:root:[Epoch 2 Batch 100] Training: accuracy=0.988906
+[1,1]<stderr>:INFO:root:[Epoch 2 Batch 200] Training: accuracy=0.987734
+[1,0]<stderr>:INFO:root:[Epoch 2 Batch 200] Training: accuracy=0.989922
+[1,1]<stderr>:INFO:root:[Epoch 2 Batch 300] Training: accuracy=0.988229
+[1,0]<stderr>:INFO:root:[Epoch 2 Batch 300] Training: accuracy=0.989792
+[1,1]<stderr>:INFO:root:[Epoch 2 Batch 400] Training: accuracy=0.988437
+[1,0]<stderr>:INFO:root:[Epoch 2 Batch 400] Training: accuracy=0.989453
+[1,0]<stderr>:INFO:root:Epoch[2]	Speed=12663.81 samples/s	Time cost=4.730331
+[1,0]<stderr>:INFO:root:Epoch[2]	Train: accuracy=0.989483	Validation: accuracy=0.988381
+[1,1]<stderr>:INFO:root:[Epoch 3 Batch 100] Training: accuracy=0.993125
+[1,0]<stderr>:INFO:root:[Epoch 3 Batch 100] Training: accuracy=0.992656
+[1,0]<stderr>:INFO:root:[Epoch 3 Batch 200] Training: accuracy=0.992891
+[1,1]<stderr>:INFO:root:[Epoch 3 Batch 200] Training: accuracy=0.991563
+[1,0]<stderr>:INFO:root:[Epoch 3 Batch 300] Training: accuracy=0.992500
+[1,1]<stderr>:INFO:root:[Epoch 3 Batch 300] Training: accuracy=0.991510
+[1,1]<stderr>:INFO:root:[Epoch 3 Batch 400] Training: accuracy=0.991797
+[1,0]<stderr>:INFO:root:[Epoch 3 Batch 400] Training: accuracy=0.992773
+[1,0]<stderr>:INFO:root:Epoch[3]	Speed=12669.35 samples/s	Time cost=4.728260
+[1,0]<stderr>:INFO:root:Epoch[3]	Train: accuracy=0.992955	Validation: accuracy=0.989183
+[1,0]<stderr>:INFO:root:[Epoch 4 Batch 100] Training: accuracy=0.994844
+[1,1]<stderr>:INFO:root:[Epoch 4 Batch 100] Training: accuracy=0.995313
+[1,1]<stderr>:INFO:root:[Epoch 4 Batch 200] Training: accuracy=0.994219
+[1,0]<stderr>:INFO:root:[Epoch 4 Batch 200] Training: accuracy=0.995000
+[1,0]<stderr>:INFO:root:[Epoch 4 Batch 300] Training: accuracy=0.994844
+[1,1]<stderr>:INFO:root:[Epoch 4 Batch 300] Training: accuracy=0.994271
+[1,0]<stderr>:INFO:root:[Epoch 4 Batch 400] Training: accuracy=0.994883
+[1,1]<stderr>:INFO:root:[Epoch 4 Batch 400] Training: accuracy=0.994570
+[1,0]<stderr>:INFO:root:Epoch[4]	Speed=12640.63 samples/s	Time cost=4.739003
+[1,0]<stderr>:INFO:root:Epoch[4]	Train: accuracy=0.994992	Validation: accuracy=0.990785

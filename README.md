@@ -3,6 +3,8 @@
 ### 目录  
 * imgs -->笔记图片
 * notes-->笔记   
+* code -->代码
+* data -->数据
   
 Horovod是TensorFlow，Keras，PyTorch和MXNet的分布式训练框架。Horovod的目标是使分布式深度学习快速且易于使用。  
   
@@ -126,10 +128,8 @@ with tf.train.MonitoredTrainingSession(checkpoint_dir=checkpoint_dir,
 ### 5.运行Horovod  
 * （1）主机上
 * （2）Docker  
-  * [Tensorflow](notes/tensorflow.md)
-  * [MxNet](notes/mxnet.md)
-  * [Pytorch](notes/pytorch.md)
-  * [Keras](notes/keras.md)
+  * [单机多卡](notes/singlepc.md)
+  * [多机多卡](notes/multipc.md)
 * （3） Kubeflow  
 * （4） MPI Operator
 * （5） Helm Chart
