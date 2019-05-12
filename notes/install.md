@@ -19,7 +19,10 @@ Installing NCCL on Ubuntu requires you to first add a repository to the APT syst
 **Note:** If you are using the network repository, the following command will upgrade CUDA to the latest version.   
 `sudo apt install libnccl2 libnccl-dev`  
 If you prefer to keep an older version of CUDA, specify a specific version, for example:   
-`sudo apt install libnccl2=2.0.0-1+cuda8.0 libnccl-dev=2.0.0-1+cuda8.0`
+`sudo apt install libnccl2=2.0.0-1+cuda8.0 libnccl-dev=2.0.0-1+cuda8.0`  
+or  
+从icloud下载：  
+`dpkg -i libnccl2_2.4.7-1+cuda10.0_amd64.deb libnccl-dev_2.4.7-1+cuda10.0_amd64.deb`
 #### ===>>> txz安装
 (1)下载  
 注册[NVIDIA Developer](https://developer.nvidia.com/developer-program),然后[下载](https://developer.nvidia.com/nccl)NCCL 2.x。     
@@ -61,13 +64,45 @@ GPUDirect allows GPUs to transfer memory among each other without CPU involvemen
   
 安装教程：https://github.com/Mellanox/nv_peer_memory   
 ### 3.安装[Open MPI](https://www.open-mpi.org/)
+(1) 下载OpenMPI   
+在[官网](https://www.open-mpi.org/)上下载最新版本的安装包.   
+(2) 解压并进行配置
 ```
-shell$ gunzip -c openmpi-4.0.1.tar.gz | tar xf -
-shell$ cd openmpi-4.0.1
-shell$ ./configure --prefix=/usr/local
-<...lots of output...>
-shell$ make all install
+tar -zxvf openmpi-4.0.1.tar.gz
+cd openmpi-4.0.1
+./configure --prefix="/usr/local/openmpi"
 ```
+注意最后一行是将其安装到 /usr/local/openmpi目录下，可以指定为其他目录，如，用户目录下。   
+(3) Build 并安装
+```
+make -j32
+sudo make install
+```
+可以在make后加参数-j8, 表示用8核编译   
+(4)  添加环境变量
+
+首先，vi ~/.bashrc (打开文件.bashrc，按i 进入编辑状态)添加   
+```
+export PATH=/usr/local/openmpi/bin:$PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/openmpi/lib
+```
+```
+source ~/.bashrc
+```
+(5) 单机测试
+```
+cd /编译的目录下/openmpi/examples 
+make 
+(pytorch) root@ubuntu:~/package/horovod/openmpi-4.0.1/examples# mpirun --allow-run-as-root  -np 2 ./hello_c 
+
+
+
+Hello, world, I am 0 of 2, (Open MPI v4.0.1, package: Open MPI root@ubuntu Distribution, ident: 4.0.1, repo rev: v4.0.1, Mar 26, 2019, 106)
+Hello, world, I am 1 of 2, (Open MPI v4.0.1, package: Open MPI root@ubuntu Distribution, ident: 4.0.1, repo rev: v4.0.1, Mar 26, 2019, 106)
+            
+```
+
+ 
 Note: Open MPI 3.1.3 has an issue that may cause hangs. It is recommended to downgrade to Open MPI 3.1.2 or upgrade to Open MPI 4.0.0.   
 ### 4. Horovod（with pip）
 If you have installed NCCL 2 using the nccl-<version>.txz package, you should specify the path to NCCL 2 using the HOROVOD_NCCL_HOME environment variable.
@@ -77,6 +112,10 @@ $ HOROVOD_NCCL_HOME=/usr/local/nccl-<version> HOROVOD_GPU_ALLREDUCE=NCCL pip ins
 If you have installed NCCL 2 using the Ubuntu package, you can simply run:
 ```
 $ HOROVOD_GPU_ALLREDUCE=NCCL pip install --no-cache-dir horovod
+```   
+or   
+```
+HOROVOD_GPU_ALLREDUCE=NCCL pip install -i https://pypi.tuna.tsinghua.edu.cn/simple  --no-cache-dir horovod
 ```
 Note: 即使GPU版本可用，一些具有高计算通信率的模型也可以在CPU上进行allreduce。要强制allreduce在CPU上发生，请传递device_dense='/cpu:0'给hvd.DistributedOptimizer：
 ```
