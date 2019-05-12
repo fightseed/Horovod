@@ -6,7 +6,7 @@
 * [Horovod介绍](notes/introduce.md)
 * [安装教程](notes/install.md)
 * [使用Horovod](notes/use.md)
-* [Pytorch + Horovod](pytorch-horovod.md)
+
 
 **-----------------------------------------------------------------------**   
 # Reference
