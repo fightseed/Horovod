@@ -1,4 +1,4 @@
-# 如何使用Horovod  
+# 一、如何使用Horovod  
 ## 概述
 要使用Horovod，请为您的程序添加以下内容：
 * （1）hvd.init()
@@ -40,5 +40,16 @@ with tf.train.MonitoredTrainingSession(
   checkpoint_dir=ckpt_dir,...) as mon_sess:
 ```   
 
- 
+# 二、运行Horovod的环境  
+在以下每个环境下，都有**单机多卡**和**多机多卡**两种情况。   
+  
+* 1. 主机上
+* 2. Docker  
+* 3. Kubeflow  
+* 4. MPI Operator
+* 5. Helm Chart
+* 6. FfDL
+* 7. Spark   
+  
+具体测试内容，请参考[benchmark](https://github.com/fusimeng/framework_benchmark)
  
