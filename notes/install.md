@@ -64,6 +64,80 @@ GPUDirect allows GPUs to transfer memory among each other without CPU involvemen
   
 安装教程：https://github.com/Mellanox/nv_peer_memory   
 ### 3.安装[Open MPI](https://www.open-mpi.org/)
+#### 准备工作
+（1） 首先肯定是需要安装GCC和G++编译器，这个直接apt-get就OK了;   
+```
+sudo apt-get install g++ gfortran
+```
+(2) 设置主机名&修改hosts文件     
+先在/etc/hosts中删除原来的hostname,然后 vi /etc/hostname改成你想要的，注意必须顶行写。然后使用hostname命令来重新得到hostname, logout一下再login就会改掉。
+
+这里我用的是sdu3和sdu4。  
+```
+sdu3
+(base) root@sdu3:~/felix# cat /etc/hosts
+127.0.0.1	localhost
+192.168.199.53	sdu3
+192.168.199.54  sdu4
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+(base) root@sdu3:~/felix# cat /etc/hostname 
+sdu3
+
+
+sdu4
+root@sdu4:~# cat /etc/hosts
+127.0.0.1	localhost
+192.168.199.53  sdu3
+192.168.199.54  sdu4
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+root@sdu4:~# cat /etc/hostname 
+sdu4
+```
+（3）配置自动ssh登录   
+安装SSH【两个节点】：  
+`sudo apt-get install ssh`  
+启动ssh服务【两个服务器】：  
+`service ssh restart`  
+生成公、私密钥【两个服务器】：   
+`ssh-keygen -t rsa`   
+将公钥加到用于认证的公钥文件中：  
+在服务器-1:  
+`cat ~/.ssh/id_rsa.pub`   
+自服务器-2:  
+`cat ~/.ssh/id_rsa.pub`   
+将上述两个命令输出的公钥分别放入服务器-1和2的这个文件下：   
+`~/.ssh/authorized_keys`    
+或  
+`cp ~/.ssh/id_dsa.pub ~/.ssh/authorized_keys`     
+`cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys`    
+验证是否SSH安装成功：
+`ssh -version`   
+免密码登陆测试：
+`ssh machine-2 # from machine-1`   
+  
+或者一种更为简单的方法：   
+在两台主机分别执行   
+```
+vim /etc/hosts  
+写入以下内容：   
+192.168.199.53  sdu3
+192.168.199.54  sdu4
+```
+在两台主机分别执行   
+```
+ssh-keygen
+ssh-copy-id [ip/hostname]
+```
+
+#### 安装步骤
 (1) 下载OpenMPI   
 在[官网](https://www.open-mpi.org/)上下载最新版本的安装包.   
 (2) 解压并进行配置
@@ -94,15 +168,27 @@ source ~/.bashrc
 cd /编译的目录下/openmpi/examples 
 make 
 (pytorch) root@ubuntu:~/package/horovod/openmpi-4.0.1/examples# mpirun --allow-run-as-root  -np 2 ./hello_c 
-
-
-
 Hello, world, I am 0 of 2, (Open MPI v4.0.1, package: Open MPI root@ubuntu Distribution, ident: 4.0.1, repo rev: v4.0.1, Mar 26, 2019, 106)
 Hello, world, I am 1 of 2, (Open MPI v4.0.1, package: Open MPI root@ubuntu Distribution, ident: 4.0.1, repo rev: v4.0.1, Mar 26, 2019, 106)
             
 ```
+(6) 多机测试
+```
+用vim编辑一个文件命名为hosts,如果你想在一个节点上运行多个进程，那么hostfile 可以使用 "slots" 属性。如果没有指定"slots"，那么将假设其数目为1.
 
- 
+sdu3
+sdu4
+或者
+
+sdu3    slots=4
+sdu4    slots=2
+让两个节点并行运行例子程序，如下所示：
+
+$ mpiexec -hostfile hosts -np 8 ./openmpi-1.6.5/examples/hello_f90
+```
+PS：如果出现错误，试着 sudo apt-get install libopenmpi-dev 或者检查环境变量路径的设置是否正确
+
+mpiexec -n 1 printenv | grep PATH  
 Note: Open MPI 3.1.3 has an issue that may cause hangs. It is recommended to downgrade to Open MPI 3.1.2 or upgrade to Open MPI 4.0.0.   
 ### 4. Horovod（with pip）
 If you have installed NCCL 2 using the nccl-<version>.txz package, you should specify the path to NCCL 2 using the HOROVOD_NCCL_HOME environment variable.
